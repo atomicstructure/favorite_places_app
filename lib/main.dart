@@ -1,3 +1,4 @@
+import 'package:favorite_places_app/screens/add_place.dart';
 import 'package:favorite_places_app/screens/places.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -31,7 +32,16 @@ final _router = GoRouter(
       builder: (context, state) {
         return const PlacesScreen();
       },
-    )
+      routes: [
+        GoRoute(
+          path: 'addplace',
+          name: 'addplace',
+          builder: (context, state) {
+            return const AddPlaceScreen();
+          },
+        )
+      ],
+    ),
   ],
 );
 
