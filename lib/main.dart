@@ -40,7 +40,7 @@ final _router = GoRouter(
           builder: (context, state) {
             return const AddPlaceScreen();
           },
-        )
+        ),
       ],
     ),
   ],
