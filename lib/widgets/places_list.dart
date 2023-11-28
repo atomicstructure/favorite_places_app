@@ -1,5 +1,5 @@
 import 'package:favorite_places_app/models/place.dart';
-import 'package:favorite_places_app/screens/places_detail.dart';
+import 'package:favorite_places_app/screens/place_detail.dart';
 import 'package:flutter/material.dart';
 
 class PlacesList extends StatelessWidget {
