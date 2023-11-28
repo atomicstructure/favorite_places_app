@@ -20,6 +20,7 @@ class PlaceDetailsScreen extends StatelessWidget {
             width: double.infinity,
             height: double.infinity,
           ),
+          const SizedBox(height: 16),
         ],
       ),
     );
