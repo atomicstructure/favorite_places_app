@@ -16,6 +16,16 @@ class _LocationInputState extends State<LocationInput> {
   PlaceLocation? _pickedLocation;
   var _isGettingLocation = false;
 
+  String get locationImage {
+    if (_pickedLocation == null) {
+      return '';
+    }
+    final lat = _pickedLocation!.latitude;
+    final lng = _pickedLocation!.longitude;
+
+    return 'https://maps.googleapis.com/maps/api/staticmap?center=$lat,$lng&zoom=16&size=600x300&maptype=roadmap&markers=color:blue%7Clabel:S%7C$lat,$lng&key=AIzaSyBnNMzbhhUoVaxNvqdE2-CZKB8VLeBO660';
+  }
+
   void _getCurrentLocation() async {
     Location location = Location();
 
@@ -46,18 +56,17 @@ class _LocationInputState extends State<LocationInput> {
     locationData = await location.getLocation();
     final lat = locationData.latitude;
     final lng = locationData.longitude;
-    const apiKey = 'AIzaSyBnNMzbhhUoVaxNvqdE2-CZKB8VLeBO660';
-
-    final url = Uri.parse(
-        'https://maps.googleapis.com/maps/api/geocode/json?latlng=$lat,$lng&key=$apiKey');
-
-    final response = await http.get(url);
-    final resData = jsonDecode(response.body);
-    final address = resData['results'][0]['formatted_address'];
 
     if (lat == null || lng == null) {
       return;
     }
+
+    final url = Uri.parse(
+        'https://maps.googleapis.com/maps/api/geocode/json?latlng=$lat,$lng&key=AIzaSyBnNMzbhhUoVaxNvqdE2-CZKB8VLeBO660');
+
+    final response = await http.get(url);
+    final resData = jsonDecode(response.body);
+    final address = resData['results'][0]['formatted_address'];
 
     setState(() {
       _pickedLocation = PlaceLocation(
@@ -83,6 +92,15 @@ class _LocationInputState extends State<LocationInput> {
           .bodyLarge!
           .copyWith(color: Theme.of(context).colorScheme.onBackground),
     );
+
+    if (_pickedLocation != null) {
+      previewContent = Image.network(
+        locationImage,
+        fit: BoxFit.cover,
+        width: double.infinity,
+        height: double.infinity,
+      );
+    }
 
     if (_isGettingLocation) {
       previewContent = const CircularProgressIndicator();
