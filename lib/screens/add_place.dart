@@ -31,9 +31,11 @@ class _AddPlaceSccreenState extends ConsumerState<AddPlaceScreen> {
       return;
     }
 
-    ref
-        .read(userPlacesProvider.notifier)
-        .addPlace(enteredTitle, _selectedImage!, _selectedLocation!);
+    ref.read(userPlacesProvider.notifier).addPlace(
+          enteredTitle,
+          _selectedImage!,
+          _selectedLocation!,
+        );
     context.pop();
   }
 
