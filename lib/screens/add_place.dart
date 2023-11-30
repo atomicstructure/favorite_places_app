@@ -1,23 +1,23 @@
 import 'dart:io';
 
 import 'package:favorite_places_app/models/place.dart';
-import 'package:favorite_places_app/providers/user_places.dart';
-import 'package:favorite_places_app/widgets/image_input.dart';
 import 'package:favorite_places_app/widgets/location_input.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
+import 'package:flutter/material.dart';
+
+import 'package:favorite_places_app/widgets/image_input.dart';
+import 'package:favorite_places_app/providers/user_places.dart';
 
 class AddPlaceScreen extends ConsumerStatefulWidget {
   const AddPlaceScreen({super.key});
 
   @override
   ConsumerState<AddPlaceScreen> createState() {
-    return _AddPlaceSccreenState();
+    return _AddPlaceScreenState();
   }
 }
 
-class _AddPlaceSccreenState extends ConsumerState<AddPlaceScreen> {
+class _AddPlaceScreenState extends ConsumerState<AddPlaceScreen> {
   final _titleController = TextEditingController();
   File? _selectedImage;
   PlaceLocation? _selectedLocation;
@@ -31,12 +31,11 @@ class _AddPlaceSccreenState extends ConsumerState<AddPlaceScreen> {
       return;
     }
 
-    ref.read(userPlacesProvider.notifier).addPlace(
-          enteredTitle,
-          _selectedImage!,
-          _selectedLocation!,
-        );
-    context.pop();
+    ref
+        .read(userPlacesProvider.notifier)
+        .addPlace(enteredTitle, _selectedImage!, _selectedLocation!);
+
+    Navigator.of(context).pop();
   }
 
   @override
@@ -49,7 +48,7 @@ class _AddPlaceSccreenState extends ConsumerState<AddPlaceScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Add your places here'),
+        title: const Text('Add new Place'),
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(12),
@@ -58,29 +57,23 @@ class _AddPlaceSccreenState extends ConsumerState<AddPlaceScreen> {
             TextField(
               decoration: const InputDecoration(labelText: 'Title'),
               controller: _titleController,
-              style:
-                  TextStyle(color: Theme.of(context).colorScheme.onBackground),
+              style: TextStyle(
+                color: Theme.of(context).colorScheme.onBackground,
+              ),
             ),
-            const SizedBox(
-              height: 16,
-            ),
-            // TODO: Add image Input here
+            const SizedBox(height: 10),
             ImageInput(
               onPickImage: (image) {
                 _selectedImage = image;
               },
             ),
-            const SizedBox(
-              height: 16,
-            ),
+            const SizedBox(height: 10),
             LocationInput(
               onSelectLocation: (location) {
                 _selectedLocation = location;
               },
             ),
-            const SizedBox(
-              height: 16,
-            ),
+            const SizedBox(height: 16),
             ElevatedButton.icon(
               onPressed: _savePlace,
               icon: const Icon(Icons.add),
